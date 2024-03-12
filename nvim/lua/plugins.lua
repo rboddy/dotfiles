@@ -7,7 +7,7 @@ return {
       vim.cmd.colorscheme = "catppuccin"
     end,
   },
-  { "nvim-telescope/telescope.nvim",   tag = "0.1.5",      dependencies = { "nvim-lua/plenary.nvim" } },
+  { "nvim-telescope/telescope.nvim", tag = "0.1.5", dependencies = { "nvim-lua/plenary.nvim" } },
   {
     "nvim-telescope/telescope-ui-select.nvim",
     config = function()
@@ -21,7 +21,18 @@ return {
       require("telescope").load_extension("ui-select")
     end,
   },
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      local config = require("nvim-treesitter.configs")
+      config.setup({
+        auto_install = true,
+        highlight = { enable = true },
+        indent = { enable = true },
+      })
+    end,
+  },
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -61,11 +72,16 @@ return {
   },
   {
     "nvimtools/none-ls.nvim",
+    dependencies = {
+      "nvimtools/none-ls-extras.nvim",
+    },
     config = function()
       local null_ls = require("null-ls")
       null_ls.setup({
         sources = {
+          require("none-ls.diagnostics.eslint_d"),
           null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.prettier,
         },
       })
       vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})

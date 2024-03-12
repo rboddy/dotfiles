@@ -26,11 +26,3 @@ vim.keymap.set("n", "<leader>n", ":Neotree filesystem reveal left<CR>", {})
 vim.keymap.set("n", "<C-p>", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>m", ":Neotree close<CR>", {})
-local config = require("nvim-treesitter.configs")
-
-config.setup({
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "javascript", "html" },
-  sync_install = false,
-  highlight = { enable = true },
-  indent = { enable = true },
-})
