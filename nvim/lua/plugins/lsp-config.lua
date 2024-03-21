@@ -18,6 +18,7 @@ return {
     lazy = false,
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
 
       local lspconfig = require("lspconfig")
       lspconfig.tsserver.setup({
@@ -30,6 +31,9 @@ return {
         capabilities = capabilities
       })
       lspconfig.svelte.setup{}
+      lspconfig.cssls.setup{
+        capabilities = capabilities
+      }
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
